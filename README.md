@@ -5,4 +5,4 @@
 
 [gitlog.txt](https://github.com/haxrober/otm-harjoitustyo/blob/master/laskarit/viikko1/gitlog.txt)
 
-
+nothing wrong here... 
