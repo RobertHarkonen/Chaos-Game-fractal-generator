@@ -5,4 +5,5 @@
 
 [gitlog.txt](https://github.com/haxrober/otm-harjoitustyo/blob/master/laskarit/viikko1/gitlog.txt)
 
-
+## Harjoitustyö
+[Vaatimusmäärittely](https://github.com/haxrober/otm-harjoitustyo/blob/master/dokumentointi/vaatimusmaarittely.md)
