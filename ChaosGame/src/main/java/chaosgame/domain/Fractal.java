@@ -5,13 +5,22 @@
  */
 package chaosgame.domain;
 
+import java.util.ArrayList;
+
 public class Fractal {
     
     private Settings settings;
     private Node[][] grid;
-    private Node current;
+    private double currentX;
+    private double currentY;
     
     public Fractal(int width, int height) {
+        if (width < 100 || width > 800) {    //default size 800x800
+            width = 800;
+        }
+        if (height < 100 || height > 800) {
+            height = 800;
+        }
         this.settings = new Settings(0.5);
         this.grid = new Node[width][height];
         for (int i = 0; i < width; i++) {
@@ -20,26 +29,57 @@ public class Fractal {
             }
         }
         
-        this.current = grid[0][0];
+        this.currentX = 0;
+        this.currentY = 0;
     }
     
-    public Fractal(int width, int height, Settings set) {
+    public Fractal(Settings set) {
         this.settings = set;
-        this.grid = new Node[width][height];
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
+        this.grid = new Node[settings.getWidth()][settings.getHeight()];
+        for (int i = 0; i < settings.getWidth(); i++) {
+            for (int j = 0; j < settings.getHeight(); j++) {
                 grid[i][j] = new Node(i, j, Nodetype.EMPTY);
             }
         }
         
-        this.current = settings.getFirstAnchor();       //empty node (0,0) if not found
+        for (Node anchor : settings.getAnchors()) {
+            grid[anchor.getX()][anchor.getY()] = anchor;
+        }
+        
+        this.currentX = settings.getFirstAnchor().getX();
+        this.currentY = settings.getFirstAnchor().getY();        //0 if no anchors added
+    }
+    
+    public int getWidth() {
+        return grid.length;
+    }
+    
+    public int getHeight() {
+        return grid[0].length;
+    }
+    
+    public Node getNode(int x, int y) {
+        return grid[x][y];
+    }
+    
+    public Settings getSettings() {
+        return settings;
+    }
+    
+    public double getCurrentX() {
+        return currentX;
+    }
+    
+    public double getCurrentY() {
+        return currentY;
     }
     
     public void addAnchor(int x, int y) {
-        settings.addAnchor(x, y);
         setType(x, y, Nodetype.ANCHOR);
+        settings.addAnchor(grid[x][y]);
         
-        current = settings.getFirstAnchor();        //starting from an anchor makes the drawing cleaner
+        currentX = settings.getFirstAnchor().getX();
+        currentY = settings.getFirstAnchor().getY();        //drawing is cleaner when starting from an anchor
     }
     
     public void setType(int x, int y, Nodetype type) {
@@ -54,19 +94,36 @@ public class Fractal {
         }
     }
     
+    public ArrayList<Node> getNodesWithType(Nodetype type) {    //heavy operation, get anchors through settings instead
+        ArrayList<Node> nodes = new ArrayList<>();
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                if (grid[i][j].getType() == type) {
+                    nodes.add(grid[i][j]);
+                }
+            }
+        }
+        return nodes;
+    }
+    
+    public void removeFilled() {                //sets filled nodes to empty
+        ArrayList<Node> filledNodes = getNodesWithType(Nodetype.FILLED);
+        for (Node filledNode : filledNodes) {
+            filledNode.setType(Nodetype.EMPTY);
+        }
+    }
+    
     /** Moves current node toward the next randomly chosen anchor
      * by the current ratio.
      */
     public void iterate() {
         Node nextAnchor = settings.getRandomAnchor();
-        long nextX = Math.round(current.getX() 
-                + settings.getRatio()*(nextAnchor.getX() - current.getX()));
-        long nextY = Math.round(current.getY() 
-                + settings.getRatio()*(nextAnchor.getY() - current.getY()));
-        current = grid[(int) nextX][(int) nextY];               //coordinates are always within int bounds
-        
-        if (current.getType() == Nodetype.EMPTY) {
-            current.setType(Nodetype.FILLED);
+        currentX = currentX + settings.getRatio()*(nextAnchor.getX() - currentX);
+        currentY = currentY + settings.getRatio()*(nextAnchor.getY() - currentY);
+        int tempX = (int) Math.round(currentX);
+        int tempY = (int) Math.round(currentY);
+        if (grid[tempX][tempY].getType() == Nodetype.EMPTY) {
+            setType(tempX, tempY, Nodetype.FILLED);
         }
     }
 }
