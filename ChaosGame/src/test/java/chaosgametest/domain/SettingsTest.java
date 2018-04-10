@@ -63,6 +63,14 @@ public class SettingsTest {
     }
     
     @Test
+    public void addingTheSameAnchorTwiceDoesntChangeTotal() {
+        Node anchor = new Node(0,0, Nodetype.ANCHOR);
+        settings.addAnchor(anchor);
+        settings.addAnchor(anchor);
+        assertEquals(1, settings.getAnchors().size());
+    }
+    
+    @Test
     public void removeAnchorsRemovesAllAnchors() {
         for (int i = 0; i < 5; i++) {
             settings.addAnchor(i, 5 - i);

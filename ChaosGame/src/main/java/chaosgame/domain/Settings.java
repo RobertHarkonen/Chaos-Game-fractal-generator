@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 
 package chaosgame.domain;
 
@@ -25,12 +21,12 @@ public class Settings {
         this.rand = new Random();
     }
     
-    public void addAnchor(int x, int y) {
+    public void addAnchor(int x, int y) {           //can create duplicate anchors
         anchors.add(new Node(x, y, Nodetype.ANCHOR));
     }
     
     public void addAnchor(Node anchor) {
-        if (anchor.getType() == Nodetype.ANCHOR) {
+        if (!anchors.contains(anchor) && anchor.getType() == Nodetype.ANCHOR) {
             anchors.add(anchor);
         }
     }

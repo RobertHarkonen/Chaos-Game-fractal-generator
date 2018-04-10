@@ -8,31 +8,34 @@ package chaosgame.domain;
 import java.util.ArrayList;
 
 public class Fractal {
-    
+
     private Settings settings;
     private Node[][] grid;
     private double currentX;
     private double currentY;
-    
+
     public Fractal(int width, int height) {
+        int tempWidth = width, tempHeight = height;
         if (width < 100 || width > 800) {    //default size 800x800
-            width = 800;
+            tempWidth = 800;
         }
         if (height < 100 || height > 800) {
-            height = 800;
+            tempHeight = 800;
         }
         this.settings = new Settings(0.5);
-        this.grid = new Node[width][height];
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
+        settings.setHeight(tempHeight);
+        settings.setWidth(tempWidth);
+        this.grid = new Node[tempWidth][tempHeight];
+        for (int i = 0; i < tempWidth; i++) {
+            for (int j = 0; j < tempHeight; j++) {
                 grid[i][j] = new Node(i, j, Nodetype.EMPTY);
             }
         }
-        
+
         this.currentX = 0;
         this.currentY = 0;
     }
-    
+
     public Fractal(Settings set) {
         this.settings = set;
         this.grid = new Node[settings.getWidth()][settings.getHeight()];
@@ -41,51 +44,56 @@ public class Fractal {
                 grid[i][j] = new Node(i, j, Nodetype.EMPTY);
             }
         }
-        
+
         for (Node anchor : settings.getAnchors()) {
             grid[anchor.getX()][anchor.getY()] = anchor;
         }
-        
+
         this.currentX = settings.getFirstAnchor().getX();
         this.currentY = settings.getFirstAnchor().getY();        //0 if no anchors added
     }
-    
+
     public int getWidth() {
         return grid.length;
     }
-    
+
     public int getHeight() {
         return grid[0].length;
     }
-    
+
     public Node getNode(int x, int y) {
         return grid[x][y];
     }
-    
+
     public Settings getSettings() {
         return settings;
     }
-    
+
     public double getCurrentX() {
         return currentX;
     }
-    
+
     public double getCurrentY() {
         return currentY;
     }
-    
+
     public void addAnchor(int x, int y) {
-        setType(x, y, Nodetype.ANCHOR);
-        settings.addAnchor(grid[x][y]);
-        
-        currentX = settings.getFirstAnchor().getX();
-        currentY = settings.getFirstAnchor().getY();        //drawing is cleaner when starting from an anchor
+        boolean validCoords = setType(x, y, Nodetype.ANCHOR);
+        if (validCoords) {
+            settings.addAnchor(grid[x][y]);
+            currentX = settings.getFirstAnchor().getX();
+            currentY = settings.getFirstAnchor().getY();        //drawing is cleaner when starting from an anchor
+        }
     }
-    
-    public void setType(int x, int y, Nodetype type) {
-        grid[x][y].setType(type);
+
+    public boolean setType(int x, int y, Nodetype type) {
+        if (x >= 0 && x < grid.length && y >= 0 && y < grid[0].length) {
+            grid[x][y].setType(type);
+            return true;
+        }
+        return false;
     }
-    
+
     public void setTypeAll(Nodetype type) {
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
@@ -93,7 +101,7 @@ public class Fractal {
             }
         }
     }
-    
+
     public ArrayList<Node> getNodesWithType(Nodetype type) {    //heavy operation, get anchors through settings instead
         ArrayList<Node> nodes = new ArrayList<>();
         for (int i = 0; i < grid.length; i++) {
@@ -105,25 +113,31 @@ public class Fractal {
         }
         return nodes;
     }
-    
+
     public void removeFilled() {                //sets filled nodes to empty
         ArrayList<Node> filledNodes = getNodesWithType(Nodetype.FILLED);
         for (Node filledNode : filledNodes) {
             filledNode.setType(Nodetype.EMPTY);
         }
     }
-    
-    /** Moves current node toward the next randomly chosen anchor
-     * by the current ratio.
+
+    /**
+     * Moves current node toward the next randomly chosen anchor by the current
+     * ratio.
      */
     public void iterate() {
         Node nextAnchor = settings.getRandomAnchor();
-        currentX = currentX + settings.getRatio()*(nextAnchor.getX() - currentX);
-        currentY = currentY + settings.getRatio()*(nextAnchor.getY() - currentY);
+        if (nextAnchor.getType() == Nodetype.EMPTY) {
+            return;
+        }
+        currentX = currentX + settings.getRatio() * (nextAnchor.getX() - currentX);
+        currentY = currentY + settings.getRatio() * (nextAnchor.getY() - currentY);
         int tempX = (int) Math.round(currentX);
         int tempY = (int) Math.round(currentY);
-        if (grid[tempX][tempY].getType() == Nodetype.EMPTY) {
-            setType(tempX, tempY, Nodetype.FILLED);
+        if (tempX >= 0 && tempX < grid.length && tempY >= 0 && tempY < grid[0].length) {
+            if (grid[tempX][tempY].getType() == Nodetype.EMPTY) {
+                setType(tempX, tempY, Nodetype.FILLED);
+            }
         }
     }
 }
