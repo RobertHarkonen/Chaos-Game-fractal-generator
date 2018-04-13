@@ -1,4 +1,6 @@
 # Chaos Game
+Sovelluksella voi piirtää [Chaos Game](https://en.wikipedia.org/wiki/Chaos_game) fraktaaleja graafisen generaattorin avulla.
 ## Dokumentaatio
 [Vaatimusmäärittely](https://github.com/haxrober/otm-harjoitustyo/blob/master/dokumentointi/vaatimusmaarittely.md)
-[Tuntikirjanpito]
+
+[Tuntikirjanpito](https://github.com/haxrober/otm-harjoitustyo/blob/master/dokumentointi/tuntikirjanpito.md)
