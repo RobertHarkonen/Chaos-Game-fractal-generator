@@ -10,14 +10,18 @@ public class Settings {
     private int width;
     private int height;
     private List<Node> anchors;
+    private Node prev;
     private double ratio;
+    private boolean repeatRule;
     private Random rand;
     
     public Settings(double rat) {
         this.width = 800;
         this.height = 800;
         this.anchors = new ArrayList<>();
+        this.prev = new Node(0, 0, Nodetype.EMPTY);
         this.ratio = rat;
+        this.repeatRule = false;
         this.rand = new Random();
     }
     
@@ -28,6 +32,7 @@ public class Settings {
     public void addAnchor(Node anchor) {
         if (!anchors.contains(anchor) && anchor.getType() == Nodetype.ANCHOR) {
             anchors.add(anchor);
+            prev = anchor;
         }
     }
 
@@ -54,9 +59,26 @@ public class Settings {
     public void setRatio(double rat) {
         this.ratio = rat;
     }
+
+    public boolean getRepeatRule() {
+        return repeatRule;
+    }
+
+    public void toggleRepeatRule() {
+        repeatRule = !repeatRule;
+    }
+
+    public Node getPrev() {
+        return prev;
+    }
+
+    public void setPrev(Node prev) {
+        this.prev = prev;
+    }
     
     public void removeAnchors() {
         anchors = new ArrayList<>();
+        prev = new Node(0, 0, Nodetype.EMPTY);
     }
     
     public Node getFirstAnchor() {
@@ -74,6 +96,15 @@ public class Settings {
         if (anchors.isEmpty()) {
             return new Node(0, 0, Nodetype.EMPTY);
         }
-        return anchors.get(rand.nextInt(anchors.size()));
+        
+        if (repeatRule && anchors.size() > 1) {
+            int i = anchors.indexOf(prev);
+            Node temp = anchors.remove(i);
+            anchors.add(temp);
+            prev = anchors.get(rand.nextInt(anchors.size() - 1));
+            return prev;
+        }
+        prev = anchors.get(rand.nextInt(anchors.size()));
+        return prev;
     }
 }

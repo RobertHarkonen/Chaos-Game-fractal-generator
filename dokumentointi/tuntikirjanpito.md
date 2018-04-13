@@ -4,3 +4,4 @@ Päivä | Tunnit | Tehty
 7.4 | 1,5 | Fraktaaligeneraattorin peruslogiikka valmis, käyttöliittymäluokka luotu
 9.4 | 1,5 | Testiluokat ja runsaasti testejä
 10.4 | 4 | Sovelluslogiikan testien viimeisteleminen, ensimmäisen toimivan käyttöliittymän luominen
+13.4 | 1,5 | Toistumissäännön lisääminen, käyttöliittymäluokan siivoaminen (mm. turhat luokkariippuvuudet)

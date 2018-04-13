@@ -6,6 +6,7 @@
 package chaosgame.domain;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Fractal {
 
@@ -112,6 +113,16 @@ public class Fractal {
             }
         }
         return nodes;
+    }
+    
+    public int[][] getAnchorCoords() {
+        List<Node> anchors = settings.getAnchors();
+        int[][] coords = new int[anchors.size()][2];
+        for (int i = 0; i < anchors.size(); i++) {
+            coords[i][0] = anchors.get(i).getX();
+            coords[i][1] = anchors.get(i).getY();
+        }
+        return coords;
     }
 
     public void removeFilled() {                //sets filled nodes to empty

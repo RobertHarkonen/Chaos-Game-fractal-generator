@@ -2,15 +2,16 @@
 package chaosgame.ui;
 
 import chaosgame.domain.Fractal;
-import chaosgame.domain.Node;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -34,8 +35,9 @@ public class ChaosGameUI extends Application {
         BorderPane bPane = new BorderPane();
         VBox controlPanel = new VBox();
         Button startButton = new Button("Start");
-        Button clearDrawn = new Button("Clear white tiles");
+        Button clearDrawn = new Button("Clear filled tiles");
         Button clearCanvas = new Button("Clear everything");
+        RadioButton repeatRule = new RadioButton("Repeat rule");
         
         Slider ratio = new Slider(0, 1.5, 0.5);
         ratio.setMajorTickUnit(1);
@@ -46,7 +48,7 @@ public class ChaosGameUI extends Application {
             activeFractal.getSettings().setRatio(ratio.getValue());
         });
         
-        controlPanel.getChildren().addAll(startButton, clearDrawn, clearCanvas, ratio);
+        controlPanel.getChildren().addAll(startButton, clearDrawn, clearCanvas, ratio, repeatRule);
         controlPanel.setSpacing(10);
         bPane.setLeft(controlPanel);
         
@@ -77,7 +79,7 @@ public class ChaosGameUI extends Application {
                     return;
                 }
 
-                for (int i = 0; i < 100; i++) {
+                for (int i = 0; i < 1000; i++) {
                     activeFractal.iterate();
                     pen.fillRect(activeFractal.getCurrentX(), activeFractal.getCurrentY(), 0.5, 0.5);
                 }
@@ -94,10 +96,12 @@ public class ChaosGameUI extends Application {
                 draw.start();
                 startButton.setText("Stop");
                 ratio.disableProperty().set(true);
+                repeatRule.disableProperty().set(true);
             } else {
                 draw.stop();
                 startButton.setText("Start");
                 ratio.disableProperty().set(false);
+                repeatRule.disableProperty().set(false);
             }
         });
         
@@ -110,26 +114,33 @@ public class ChaosGameUI extends Application {
             pen.fillRect(0, 0, screenWidth, screenHeight);
             pen.setFill(Color.RED);
             
-            for (Node anchor : activeFractal.getSettings().getAnchors()) {
-                int xCoord = anchor.getX();
-                int yCoord = anchor.getY();
-                
-                pen.fillOval(xCoord - 2, yCoord - 2, 5, 5);
+            int[][] coords = activeFractal.getAnchorCoords();
+            for (int[] coord : coords) {
+                pen.fillOval(coord[0] - 2, coord[1] - 2, 5, 5);
             }
             
             pen.setFill(Color.WHITE);
             ratio.disableProperty().set(false);
+            repeatRule.disableProperty().set(false);
         });
         
         clearCanvas.setOnAction(event -> {
             draw.stop();
             startButton.setText("Start");
             
+            if (activeFractal.getSettings().getRepeatRule()) {
+                repeatRule.fire();
+            }
             activeFractal = new Fractal(screenWidth, screenHeight);
+            ratio.setValue(activeFractal.getSettings().getRatio());
             pen.setFill(Color.BLACK);
             pen.fillRect(0, 0, screenWidth, screenHeight);
 
             ratio.disableProperty().set(false);
+        });
+        
+        repeatRule.setOnAction(event -> {
+            activeFractal.getSettings().toggleRepeatRule();
         });
         
         Scene scene = new Scene(bPane);
