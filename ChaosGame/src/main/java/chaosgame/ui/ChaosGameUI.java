@@ -11,7 +11,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -128,6 +127,7 @@ public class ChaosGameUI extends Application {
             draw.stop();
             startButton.setText("Start");
             
+            repeatRule.disableProperty().set(false);
             if (activeFractal.getSettings().getRepeatRule()) {
                 repeatRule.fire();
             }
