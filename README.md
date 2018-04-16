@@ -4,3 +4,5 @@ Sovelluksella voi piirtää [Chaos Game](https://en.wikipedia.org/wiki/Chaos_gam
 [Vaatimusmäärittely](https://github.com/haxrober/otm-harjoitustyo/blob/master/dokumentointi/vaatimusmaarittely.md)
 
 [Tuntikirjanpito](https://github.com/haxrober/otm-harjoitustyo/blob/master/dokumentointi/tuntikirjanpito.md)
+
+[Arkkitehtuuri](https://github.com/haxrober/otm-harjoitustyo/blob/master/dokumentointi/arkkitehtuuri.md)
