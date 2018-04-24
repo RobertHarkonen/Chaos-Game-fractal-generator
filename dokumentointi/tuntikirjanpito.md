@@ -7,3 +7,5 @@ Päivä | Tunnit | Tehty
 13.4 | 1,5 | Toistumissäännön lisääminen, käyttöliittymäluokan siivoaminen (mm. turhat luokkariippuvuudet)
 16.4 | 1,5 | Pieni bugfix, Checkstylen käyttöönotto ja asetusten määritteleminen, luokkakaavion luominen
 23.4 | 3 | UI- parannuksia, piirtovärin ja -nopeuden muuttaminen
+24.4 | 3 | Piirtohienouden muuttaminen, sekvenssikaavio ja paketointi
+Yhteensä | 18,5 | -
