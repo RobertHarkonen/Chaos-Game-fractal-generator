@@ -12,6 +12,7 @@ public class Settings {
     private List<Node> anchors;
     private Node prev;
     private double ratio;
+    private double grainSize;
     private boolean repeatRule;
     private Random rand;
     
@@ -58,6 +59,14 @@ public class Settings {
     
     public void setRatio(double rat) {
         this.ratio = rat;
+    }
+
+    public double getGrainSize() {
+        return grainSize;
+    }
+
+    public void setGrainSize(double grainSize) {
+        this.grainSize = grainSize;
     }
 
     public boolean getRepeatRule() {

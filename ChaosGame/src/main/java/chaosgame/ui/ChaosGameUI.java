@@ -25,13 +25,15 @@ public class ChaosGameUI extends Application {
     int screenWidth;
     int screenHeight;
     int drawSpeed;
+    double grainSize;
     Fractal activeFractal;
 
     @Override
     public void start(Stage stage) {
         screenWidth = 800;
         screenHeight = 600;
-        drawSpeed = 1000;
+        drawSpeed = 10000;
+        grainSize = 0.5;
         activeFractal = new Fractal(screenWidth, screenHeight);
 
         BorderPane bPane = new BorderPane();
@@ -67,7 +69,7 @@ public class ChaosGameUI extends Application {
         speedControlBox.setBorder(new Border(new BorderStroke(Color.DARKGRAY,
                 BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
         Text speedControlDescription = new Text("Iterations per cycle:\n (enter to confirm)");
-        TextField speedControl = new TextField("1000");
+        TextField speedControl = new TextField(Integer.toString(drawSpeed));
         speedControl.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable,
@@ -96,7 +98,24 @@ public class ChaosGameUI extends Application {
         });
 
         speedControlBox.getChildren().addAll(speedControlDescription, speedControl);
-
+        
+        VBox grainSizeBox = new VBox(10);
+        grainSizeBox.setPadding(new Insets(5, 5, 5, 5));
+        grainSizeBox.setBorder(new Border(new BorderStroke(Color.DARKGRAY,
+                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+        Text grainSizeDescription = new Text("Grain size:");
+        Slider grainSizeSlider = new Slider(0.1, 1.0, 0.5);
+        grainSizeSlider.setMajorTickUnit(0.9);
+        grainSizeSlider.setMinorTickCount(8);
+        grainSizeSlider.snapToTicksProperty().set(true);
+        grainSizeSlider.showTickLabelsProperty().set(true);
+        grainSizeSlider.showTickMarksProperty().set(true);
+        grainSizeSlider.setOnMouseDragged(event -> {
+            grainSize = grainSizeSlider.getValue();
+            activeFractal.setGrainSize(grainSize);
+        });
+        grainSizeBox.getChildren().addAll(grainSizeDescription, grainSizeSlider);
+        
         ComboBox colorPick = new ComboBox();
         colorPick.getItems().addAll("White", "Gray", "Red", "Orange", "Yellow",
                 "Green", "Blue", "Indigo", "Violet");
@@ -142,7 +161,7 @@ public class ChaosGameUI extends Application {
         });
 
         controlPanel.getChildren().addAll(startButton, clearDrawn, clearCanvas,
-                speedControlBox, ratioBox, repeatRule, colorPick);
+                speedControlBox, grainSizeBox, ratioBox, repeatRule, colorPick);
         bPane.setLeft(controlPanel);
 
         canvas.setOnMouseClicked(event -> {
@@ -168,7 +187,8 @@ public class ChaosGameUI extends Application {
 
                 for (int i = 0; i < drawSpeed; i++) {
                     activeFractal.iterate();
-                    pen.fillRect(activeFractal.getCurrentX(), activeFractal.getCurrentY(), 0.5, 0.5);
+                    pen.fillRect(activeFractal.getCurrentX(), 
+                            activeFractal.getCurrentY(), grainSize, grainSize);
                 }
 
                 prev = now;
@@ -182,12 +202,12 @@ public class ChaosGameUI extends Application {
             if (startButton.getText().equals("Start")) {
                 draw.start();
                 startButton.setText("Stop");
-                ratio.disableProperty().set(true);
+                ratioBox.disableProperty().set(true);
                 repeatRule.disableProperty().set(true);
             } else {
                 draw.stop();
                 startButton.setText("Start");
-                ratio.disableProperty().set(false);
+                ratioBox.disableProperty().set(false);
                 repeatRule.disableProperty().set(false);
             }
         });

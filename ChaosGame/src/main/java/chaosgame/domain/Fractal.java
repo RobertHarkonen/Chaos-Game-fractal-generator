@@ -77,6 +77,14 @@ public class Fractal {
     public double getCurrentY() {
         return currentY;
     }
+    
+    public double getGrainSize() {
+        return settings.getGrainSize();
+    }
+    
+    public void setGrainSize(double size) {
+        settings.setGrainSize(size);
+    }
 
     public void addAnchor(int x, int y) {
         boolean validCoords = setType(x, y, Nodetype.ANCHOR);
