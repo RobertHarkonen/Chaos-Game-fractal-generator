@@ -228,7 +228,7 @@ public class ChaosGameUI extends Application {
             }
 
             pen.setFill(temp);
-            ratio.disableProperty().set(false);
+            ratioBox.disableProperty().set(false);
             repeatRule.disableProperty().set(false);
         });
 
@@ -247,7 +247,7 @@ public class ChaosGameUI extends Application {
             pen.fillRect(0, 0, screenWidth, screenHeight);
             pen.setFill(temp);
 
-            ratio.disableProperty().set(false);
+            ratioBox.disableProperty().set(false);
         });
 
         repeatRule.setOnAction(event -> {

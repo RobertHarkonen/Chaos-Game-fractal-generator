@@ -90,8 +90,9 @@ public class Fractal {
         boolean validCoords = setType(x, y, Nodetype.ANCHOR);
         if (validCoords) {
             settings.addAnchor(grid[x][y]);
-            currentX = settings.getFirstAnchor().getX();
-            currentY = settings.getFirstAnchor().getY();        //drawing is cleaner when starting from an anchor
+            Node a = settings.getFirstAnchor(); 
+            currentX = a.getX();
+            currentY = a.getY();        //drawing is cleaner when starting from an anchor
         }
     }
 
