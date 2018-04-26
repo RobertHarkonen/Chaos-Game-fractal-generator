@@ -2,21 +2,39 @@
 
 package chaosgame.domain;
 
+import com.j256.ormlite.dao.DaoManager;
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+@DatabaseTable(tableName = "settings")
 public class Settings {
+    @DatabaseField(id=true)
+    private String key;
+    @DatabaseField
     private int width;
+    @DatabaseField
     private int height;
+    @DatabaseField
     private List<Node> anchors;
+    @DatabaseField
     private Node prev;
+    @DatabaseField
     private double ratio;
+    @DatabaseField
     private double grainSize;
+    @DatabaseField
     private boolean repeatRule;
     private Random rand;
     
+    public Settings() {
+        
+    }
+    
     public Settings(double rat) {
+        this.key = "default";
         this.width = 800;
         this.height = 800;
         this.anchors = new ArrayList<>();
