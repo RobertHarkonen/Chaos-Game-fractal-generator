@@ -5,12 +5,15 @@
  */
 package chaosgame.domain;
 
+import dao.SettingsDAO;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Fractal {
 
     private Settings settings;
+    private SettingsDAO sd;
     private Node[][] grid;
     private double currentX;
     private double currentY;
@@ -24,6 +27,7 @@ public class Fractal {
             tempHeight = 800;
         }
         this.settings = new Settings(0.5);
+        this.sd = new SettingsDAO();
         settings.setHeight(tempHeight);
         settings.setWidth(tempWidth);
         this.grid = new Node[tempWidth][tempHeight];
@@ -39,6 +43,7 @@ public class Fractal {
 
     public Fractal(Settings set) {
         this.settings = set;
+        this.sd = new SettingsDAO();
         this.grid = new Node[settings.getWidth()][settings.getHeight()];
         for (int i = 0; i < settings.getWidth(); i++) {
             for (int j = 0; j < settings.getHeight(); j++) {
@@ -52,6 +57,23 @@ public class Fractal {
 
         this.currentX = settings.getFirstAnchor().getX();
         this.currentY = settings.getFirstAnchor().getY();        //0 if no anchors added
+    }
+    
+    public Settings loadSettings(String key) {
+        return sd.getFromDatabase(key);
+    }
+    
+    public List<String> storedSettings() {
+        return sd.getSettingsKeys();
+    }
+    
+    public void saveSettings(String key) {
+        settings.setKey(key);
+        sd.saveToDatabase(settings);
+    }
+    
+    public void removeSettings(String key) {
+        sd.removeFromDatabase(key);
     }
 
     public int getWidth() {

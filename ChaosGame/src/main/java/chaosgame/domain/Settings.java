@@ -17,9 +17,7 @@ public class Settings {
     private int width;
     @DatabaseField
     private int height;
-    @DatabaseField
     private List<Node> anchors;
-    @DatabaseField
     private Node prev;
     @DatabaseField
     private double ratio;
@@ -55,6 +53,14 @@ public class Settings {
         }
     }
 
+    public String getKey() {
+        return this.key;
+    }
+    
+    public void setKey(String key) {
+        this.key = key;
+    }
+    
     public int getWidth() {
         return width;
     }
@@ -98,9 +104,17 @@ public class Settings {
     public Node getPrev() {
         return prev;
     }
-
+    
+    public void setAnchors(List<Node> anchors) {
+        this.anchors = anchors;
+    }
+    
     public void setPrev(Node prev) {
         this.prev = prev;
+    }
+    
+    public void setRandom(Random random) {
+        this.rand = random;
     }
     
     public void removeAnchors() {

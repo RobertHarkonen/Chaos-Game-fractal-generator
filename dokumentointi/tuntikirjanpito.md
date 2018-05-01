@@ -8,4 +8,7 @@ Päivä | Tunnit | Tehty
 16.4 | 1,5 | Pieni bugfix, Checkstylen käyttöönotto ja asetusten määritteleminen, luokkakaavion luominen
 23.4 | 3 | UI- parannuksia, piirtovärin ja -nopeuden muuttaminen
 24.4 | 3 | Piirtohienouden muuttaminen, sekvenssikaavio ja paketointi
+27.4 | 2 | SQlite ja ormlite aloituksia
+29.4 | 2 | lisää tietokantahommia
+1.5 | 2,5 | Tallennus, lataus ja poistamistoiminnallisuus valmis
 Yhteensä | 18,5 | -

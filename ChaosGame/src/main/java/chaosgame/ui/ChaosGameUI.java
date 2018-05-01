@@ -1,6 +1,9 @@
 package chaosgame.ui;
 
-import chaosgame.domain.Fractal;
+import chaosgame.domain.*;          //temporary, set to only include Fractal
+import dao.SettingsDAO;
+import java.sql.SQLException;
+import java.util.Comparator;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
@@ -15,6 +18,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javax.swing.JComboBox;
 
 /**
  *
@@ -29,7 +33,18 @@ public class ChaosGameUI extends Application {
     Fractal activeFractal;
 
     @Override
-    public void start(Stage stage) {
+    public void start(Stage stage) throws SQLException {
+//        SettingsDAO sd = new SettingsDAO();
+//        Settings testsettings = new Settings(0.5);
+//        testsettings.addAnchor(new Node(100, 100, Nodetype.ANCHOR));
+//        testsettings.addAnchor(new Node(100, 200, Nodetype.ANCHOR));
+//        sd.saveToDatabase(testsettings);
+//        Settings s2 = sd.getFromDatabase("default");
+//        System.out.println(s2.getKey());
+//        System.out.println(s2.getAnchors() == null);
+//        System.out.println(s2.getPrev() == null);
+//        System.out.println(s2.getAnchors().size() == 2);
+        
         screenWidth = 800;
         screenHeight = 600;
         drawSpeed = 10000;
@@ -163,7 +178,91 @@ public class ChaosGameUI extends Application {
         controlPanel.getChildren().addAll(startButton, clearDrawn, clearCanvas,
                 speedControlBox, grainSizeBox, ratioBox, repeatRule, colorPick);
         bPane.setLeft(controlPanel);
-
+        
+        VBox savePanel = new VBox();
+        savePanel.setSpacing(10);
+        savePanel.setPadding(new Insets(10, 5, 10, 5));
+        ComboBox<String> saves = new ComboBox();
+        saves.setMaxWidth(Double.MAX_VALUE);
+        saves.setValue("");
+        saves.setVisibleRowCount(10);
+//        saves.setPromptText("");
+        for (String storedSetting : activeFractal.storedSettings()) {
+            saves.getItems().add(storedSetting);
+        }
+        Text saveDescription = new Text("Saved settings:");
+        HBox loadDeleteBox = new HBox();
+        Button load = new Button("Load");
+        Button delete = new Button("Delete");
+        load.setMaxWidth(Double.MAX_VALUE);
+        delete.setMaxWidth(Double.MAX_VALUE);
+        load.setOnAction(event -> {
+            if (saves.getValue().isEmpty()) {
+                return;
+            }
+            if (activeFractal.getSettings().getRepeatRule()) {
+                repeatRule.fire();
+            }
+            activeFractal = new Fractal(activeFractal.loadSettings(saves.getValue()));
+            clearDrawn.fire();
+            ratio.setValue(activeFractal.getSettings().getRatio());
+            grainSizeSlider.setValue(activeFractal.getSettings().getGrainSize());
+            grainSize = grainSizeSlider.getValue();
+            if (activeFractal.getSettings().getRepeatRule()) {
+                repeatRule.fire();
+                activeFractal.getSettings().toggleRepeatRule();
+            }
+        });
+        delete.setOnAction(event -> {
+            if (saves.getValue().isEmpty()) {
+                return;
+            }
+            activeFractal.removeSettings(saves.getValue());
+            saves.getItems().remove(saves.getValue());
+            saves.getItems().sort((String o1, String o2) -> o1.compareTo(o2));
+            saves.setValue("");
+            saves.setPromptText("");
+        });
+        loadDeleteBox.setSpacing(10);
+        loadDeleteBox.getChildren().addAll(load, delete);
+        VBox loadDeleteHelperBox = new VBox();
+        loadDeleteHelperBox.setSpacing(10);
+        loadDeleteHelperBox.setPadding(new Insets(5, 5, 5, 5));
+        loadDeleteHelperBox.setBorder(new Border(new BorderStroke(Color.DARKGRAY,
+                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+        loadDeleteHelperBox.getChildren().addAll(saveDescription, saves, load, delete);
+        
+        Text saveInputDescription = new Text("Save current settings:\n(enter name)");
+        TextField saveInput = new TextField("");
+        saveInput.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable,
+                    String oldValue, String newValue) {
+                if (newValue.length() > 20) {
+                    saveInput.setText(newValue.substring(0, 20));
+                }
+            }
+        });
+        Button saveButton = new Button("Save");
+        saveButton.setMaxWidth(Double.MAX_VALUE);
+        saveButton.setOnAction(event -> {
+            if (saveInput.getText().isEmpty()) {
+                return;
+            }
+            activeFractal.saveSettings(saveInput.getText());
+            saves.getItems().add(saveInput.getText());
+            saves.getItems().sort((String o1, String o2) -> o1.compareTo(o2));
+        });
+        VBox saveHelperBox = new VBox();
+        saveHelperBox.setSpacing(10);
+        saveHelperBox.setPadding(new Insets(5, 5, 5, 5));
+        saveHelperBox.setBorder(new Border(new BorderStroke(Color.DARKGRAY,
+                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+        saveHelperBox.getChildren().addAll(saveInputDescription, saveInput, saveButton);
+        
+        savePanel.getChildren().addAll(loadDeleteHelperBox, saveHelperBox);
+        bPane.setRight(savePanel);
+        
         canvas.setOnMouseClicked(event -> {
             int nodeX = (int) Math.round(event.getX());
             int nodeY = (int) Math.round(event.getY());
@@ -202,11 +301,13 @@ public class ChaosGameUI extends Application {
             if (startButton.getText().equals("Start")) {
                 draw.start();
                 startButton.setText("Stop");
+                savePanel.disableProperty().set(true);
                 ratioBox.disableProperty().set(true);
                 repeatRule.disableProperty().set(true);
             } else {
                 draw.stop();
                 startButton.setText("Start");
+                savePanel.disableProperty().set(false);
                 ratioBox.disableProperty().set(false);
                 repeatRule.disableProperty().set(false);
             }
@@ -228,6 +329,7 @@ public class ChaosGameUI extends Application {
             }
 
             pen.setFill(temp);
+            savePanel.disableProperty().set(false);
             ratioBox.disableProperty().set(false);
             repeatRule.disableProperty().set(false);
         });
@@ -246,7 +348,8 @@ public class ChaosGameUI extends Application {
             pen.setFill(Color.BLACK);
             pen.fillRect(0, 0, screenWidth, screenHeight);
             pen.setFill(temp);
-
+            
+            savePanel.disableProperty().set(false);
             ratioBox.disableProperty().set(false);
         });
 

@@ -5,5 +5,6 @@
     "http://www.puppycrawl.com/dtds/suppressions_1_1.dtd">
 
 <suppressions>
-    <suppress files="chaosgame.ui.ChaosGameUI.java" checks="[a-zA-Z0-9]*"/>
+	<suppress files="chaosgame.ui.ChaosGameUI.java" checks="[a-zA-Z0-9]*"/>
+	<suppress files="chaosgame.ui.UIBuilder.java" checks="[a-zA-Z0-9]*"/>
 </suppressions>
