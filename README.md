@@ -12,3 +12,12 @@ Sovelluksella voi piirtää [Chaos Game](https://en.wikipedia.org/wiki/Chaos_gam
 ## Versiot
 
 [Release 1](https://github.com/haxrober/otm-harjoitustyo/releases/tag/viikko5)
+[Release 2](https://github.com/haxrober/otm-harjoitustyo/releases/tag/viikko6)
+
+## Komentoriviohjeet
+
+- Testaus: ´mvn test´
+- Testikattavuusraportin generointi: ´mvn test jacoco:report´
+- .jar -tiedoston generointi: ´mvn package´
+- Checkstyle: ´mvn checkstyle:checkstyle´
+- Javadocin generointi: ´mvn javadoc:javadoc´
