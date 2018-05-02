@@ -11,4 +11,5 @@ Päivä | Tunnit | Tehty
 27.4 | 2 | SQlite ja ormlite aloituksia
 29.4 | 2 | lisää tietokantahommia
 1.5 | 2,5 | Tallennus, lataus ja poistamistoiminnallisuus valmis
-Yhteensä | 25 | -
+2.5 | 3 | Käyttöliittymäkoodin refaktorointi, Javadoc
+Yhteensä | 28 | -
