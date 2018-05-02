@@ -16,8 +16,8 @@ Sovelluksella voi piirtää [Chaos Game](https://en.wikipedia.org/wiki/Chaos_gam
 
 ## Komentoriviohjeet
 
-- Testaus: ´mvn test´
-- Testikattavuusraportin generointi: ´mvn test jacoco:report´
-- .jar -tiedoston generointi: ´mvn package´
-- Checkstyle: ´mvn checkstyle:checkstyle´
-- Javadocin generointi: ´mvn javadoc:javadoc´
+- Testaus: `mvn test`
+- Testikattavuusraportin generointi: `mvn test jacoco:report`
+- .jar -tiedoston generointi: `mvn package`
+- Checkstyle: `mvn checkstyle:checkstyle`
+- Javadocin generointi: `mvn javadoc:javadoc`
