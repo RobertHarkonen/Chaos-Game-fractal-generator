@@ -2,13 +2,17 @@
 
 package chaosgame.domain;
 
-import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * An object type storing all information needed to generate
+ * a specific fractal. Note that not all fields are database persisted,
+ * some are generated upon construction or when fetching from the database.
+ */
 @DatabaseTable(tableName = "settings")
 public class Settings {
     @DatabaseField(id=true)
@@ -27,10 +31,18 @@ public class Settings {
     private boolean repeatRule;
     private Random rand;
     
+    /**
+     * Empty constructor, needed for ORMlite functionality
+     */
     public Settings() {
         
     }
     
+    /**
+     * Creates default Settings with the given ratio and no anchor points.
+     * 
+     * @param rat The fractal ratio to be used
+     */
     public Settings(double rat) {
         this.key = "default";
         this.width = 800;
@@ -42,10 +54,16 @@ public class Settings {
         this.rand = new Random();
     }
     
-    public void addAnchor(int x, int y) {           //can create duplicate anchors
+    public void addAnchor(int x, int y) {         //can create duplicate anchors, not used
         anchors.add(new Node(x, y, Nodetype.ANCHOR));
     }
     
+    /**
+     * Adds the given Node to the list of anchors, as long as
+     * it is of the right type.
+     * @param anchor the Node to be added.
+     * @see chaosgame.domain.Fractal#addAnchor(int, int) 
+     */
     public void addAnchor(Node anchor) {
         if (!anchors.contains(anchor) && anchor.getType() == Nodetype.ANCHOR) {
             anchors.add(anchor);
@@ -96,7 +114,11 @@ public class Settings {
     public boolean getRepeatRule() {
         return repeatRule;
     }
-
+    
+    /**
+     * Changes the repeat rule setting from true to false,
+     * or vice versa.
+     */
     public void toggleRepeatRule() {
         repeatRule = !repeatRule;
     }
@@ -105,23 +127,36 @@ public class Settings {
         return prev;
     }
     
-    public void setAnchors(List<Node> anchors) {
-        this.anchors = anchors;
-    }
-    
     public void setPrev(Node prev) {
         this.prev = prev;
+    }
+    
+    /**
+     * Sets anchor points to a given list.
+     * @param anchors The list of anchor points to be used.
+     */
+    public void setAnchors(List<Node> anchors) {
+        this.anchors = anchors;
     }
     
     public void setRandom(Random random) {
         this.rand = random;
     }
     
+    /**
+     * Sets the list of anchors to an empty list, effectively removing
+     * all anchor points.
+     */
     public void removeAnchors() {
         anchors = new ArrayList<>();
         prev = new Node(0, 0, Nodetype.EMPTY);
     }
     
+    /**
+     * Gets the first anchor point.
+     * @return The first Node in the list of anchor points, or an empty node
+     * a coordinates (0, 0) if the list is empty.
+     */
     public Node getFirstAnchor() {
         if (anchors.isEmpty()) {
             return new Node(0, 0, Nodetype.EMPTY);
@@ -133,6 +168,13 @@ public class Settings {
         return this.anchors;
     }
     
+    /**
+     * Gives a random Node from the list of anchor points, or a default empty Node
+     * if the list is empty. The random Node is picked using the local Random
+     * variable.
+     * @return A random Node from the list of anchors, or a default empty Node
+     * if the list is empty.
+     */
     public Node getRandomAnchor() {
         if (anchors.isEmpty()) {
             return new Node(0, 0, Nodetype.EMPTY);

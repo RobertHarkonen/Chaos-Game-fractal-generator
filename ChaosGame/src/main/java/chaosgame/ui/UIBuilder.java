@@ -21,7 +21,12 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
-
+/**
+ * A class that assists in building the user interface
+ * used in the ChaosGameUI class. The UI features are hard coded and
+ * should only be changed if the default layout changes (such as screen size).
+ * @author Robert
+ */
 public class UIBuilder {
     
     private int width;

@@ -5,6 +5,11 @@ package chaosgame.domain;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+/**
+ * The most basic building block of the fractal. Contains coordinates, type
+ * and a reference to associated Settings.
+ * @see chaosgame.domain.Nodetype
+ */
 @DatabaseTable(tableName = "anchors")
 public class Node {
     @DatabaseField(generatedId = true)
@@ -18,10 +23,19 @@ public class Node {
     @DatabaseField(foreign = true)
     private Settings settings;
     
+    /**
+     * An empty constructor is needed for ORMlite functionality.
+     */
     public Node() {
         
     }
     
+    /**
+     * Creates a Node with the supplied values.
+     * @param x X-coordinate of the node.
+     * @param y Y-coordinate of the node.
+     * @param type The Nodetype to be set.
+     */
     public Node(int x, int y, Nodetype type) {
         this.x = x;
         this.y = y;

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dao;
+package chaosgame.dao;
 
 import chaosgame.domain.Node;
 import chaosgame.domain.Settings;
@@ -19,11 +19,19 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
+/**
+ * Handles all saving, loading and deleting of fractal-generating settings
+ * in a local database, using the Ormlite DAO-implementation.
+ */
 public class SettingsDAO {
 
     private Dao<Settings, String> daoS;
     private Dao<Node, String> daoN;
 
+    /**
+     * Creates a local database if not present, establishes a connection and
+     * initializes the required tables.
+     */
     public SettingsDAO() {
         try {
             ConnectionSource cs = new JdbcConnectionSource("jdbc:sqlite:SavedSettings.db");
@@ -32,10 +40,16 @@ public class SettingsDAO {
             TableUtils.createTableIfNotExists(cs, Settings.class);
             TableUtils.createTableIfNotExists(cs, Node.class);
         } catch (SQLException e) {
-
+            System.out.println(e.toString() + ": ERROR CONNECTING TO DATABASE");
         }
     }
-
+    
+    /**
+     * Saves the given Settings, and all associated anchor points,
+     * to the database.
+     * 
+     * @param settings The Settings to be saved
+     */
     public void saveToDatabase(Settings settings) {
         try {
             DeleteBuilder<Node, String> db = daoN.deleteBuilder();
@@ -49,10 +63,17 @@ public class SettingsDAO {
                 daoN.createIfNotExists(anchor);
             }
         } catch (SQLException e) {
-            System.out.println("ERROR WHEN SAVING SETTINGS");
+            System.out.println(e.toString() + ": ERROR WHEN SAVING SETTINGS");
         }
     }
 
+    /**
+     * Queries for Settings from the database with a given key.
+     * 
+     * @param id The string by which the Settings are identified (primary key)
+     * @return The queried settings, or default Settings if an error occurs.
+     * @see chaosgame.domain.Settings#Settings(double)  
+     */
     public Settings getFromDatabase(String id) {
         try {
             Settings s = daoS.queryForId(id);
@@ -66,11 +87,15 @@ public class SettingsDAO {
             s.setRandom(new Random());
             return s;
         } catch (SQLException e) {
-            System.out.println("ERROR WHEN LOADING SETTINGS");
+            System.out.println(e.toString() + ": ERROR WHEN LOADING SETTINGS");
             return new Settings(0.5);           //default
         }
     }
 
+    /**
+     * Removes settings with the given key from the database.
+     * @param id The string by which the Settings are identified (primary key)
+     */
     public void removeFromDatabase(String id) {
         try {
             Settings s = daoS.queryForId(id);
@@ -80,10 +105,14 @@ public class SettingsDAO {
 
             daoS.delete(s);
         } catch (SQLException e) {
-            System.out.println("ERROR WHEN DELETING SETTINGS");
+            System.out.println(e.toString() + ": ERROR WHEN DELETING SETTINGS");
         }
     }
-
+    
+    /**
+     * Gets a list of Settings names (keys) from the database.
+     * @return A sorted list of Settings
+     */
     public List<String> getSettingsKeys() {
         try {
             List<Settings> list = daoS.queryForAll();
@@ -95,7 +124,7 @@ public class SettingsDAO {
                     .sorted()
                     .collect(Collectors.toCollection(ArrayList::new));
         } catch (SQLException e) {
-            System.out.println("ERROR WHEN GETTING SETTING KEYS");
+            System.out.println(e.toString() + ": ERROR WHEN FETCHING SETTING KEYS");
             return new ArrayList<>();
         }
     }
