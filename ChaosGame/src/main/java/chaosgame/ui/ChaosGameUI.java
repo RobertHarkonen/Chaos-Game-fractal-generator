@@ -1,7 +1,6 @@
 package chaosgame.ui;
 
-import chaosgame.domain.Fractal;          //temporary, set to only include Fractal
-import java.sql.SQLException;
+import chaosgame.domain.Fractal;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -26,7 +25,7 @@ public class ChaosGameUI extends Application {
     Fractal activeFractal;
 
     @Override
-    public void start(Stage stage) throws SQLException {
+    public void start(Stage stage) {
         
         screenWidth = 800;
         screenHeight = 600;
@@ -230,7 +229,6 @@ public class ChaosGameUI extends Application {
             draw.stop();
             startButton.setText("Start");
 
-            activeFractal.removeFilled();
             Paint temp = pen.getFill();
             pen.setFill(Color.BLACK);
             pen.fillRect(0, 0, screenWidth, screenHeight);

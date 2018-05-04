@@ -23,8 +23,9 @@ import javafx.scene.text.Text;
 
 /**
  * A class that assists in building the user interface
- * used in the ChaosGameUI class. The UI features are hard coded and
- * should only be changed if the default layout changes (such as screen size).
+ * used in the ChaosGameUI class. The UI features are hard coded,
+ * hence the ugly looking code. These adjust only to screen size, for other
+ * improvements they have to be changed manually.
  * @author Robert
  */
 public class UIBuilder {

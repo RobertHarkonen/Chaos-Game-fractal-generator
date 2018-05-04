@@ -60,11 +60,15 @@ public class Settings {
     
     /**
      * Adds the given Node to the list of anchors, as long as
-     * it is of the right type.
+     * it is of the right type and within bounds.
      * @param anchor the Node to be added.
      * @see chaosgame.domain.Fractal#addAnchor(int, int) 
      */
     public void addAnchor(Node anchor) {
+        if (anchor.getX() < 0 || anchor.getX() > width
+                || anchor.getY() < 0 || anchor.getY() > height) {
+            return;
+        }
         if (!anchors.contains(anchor) && anchor.getType() == Nodetype.ANCHOR) {
             anchors.add(anchor);
             prev = anchor;
@@ -115,20 +119,16 @@ public class Settings {
         return repeatRule;
     }
     
+    public void setPrev(Node prev) {
+        this.prev = prev;
+    }
+    
     /**
      * Changes the repeat rule setting from true to false,
      * or vice versa.
      */
     public void toggleRepeatRule() {
         repeatRule = !repeatRule;
-    }
-
-    public Node getPrev() {
-        return prev;
-    }
-    
-    public void setPrev(Node prev) {
-        this.prev = prev;
     }
     
     /**

@@ -4,6 +4,7 @@ package chaosgametest.domain;
 import chaosgame.domain.Settings;
 import chaosgame.domain.Node;
 import chaosgame.domain.Nodetype;
+import java.util.Random;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -33,17 +34,56 @@ public class SettingsTest {
     }
     
     @Test
-    public void getAndSetRatioWorksCorrectly() {
+    public void getAndSetRatioTest() {
         settings.setRatio(1.12);
         assertEquals(1.12, settings.getRatio(), 0.0000002);
     }
     
     @Test
-    public void getAndSetWidthWorksCorrecly() {
-        settings.setHeight(100);
-        assertEquals(100, settings.getHeight());
+    public void getAndSetWidthTest() {
         settings.setWidth(100);
         assertEquals(100, settings.getWidth());
+    }
+    
+    @Test
+    public void getAndSetHeightTest() {
+        settings.setHeight(100);
+        assertEquals(100, settings.getHeight());
+    }
+    
+    @Test
+    public void getAndSetKeyTest() {
+        settings.setKey("Daim patukka");
+        assertEquals("Daim patukka", settings.getKey());
+    }
+    
+    @Test
+    public void getAndSetGrainsizeTest() {
+        settings.setGrainSize(0.9);
+        assertEquals(0.9, settings.getGrainSize(), 0.000002);
+    }
+    
+    @Test
+    public void canToggleRepeatRule() {
+        settings.toggleRepeatRule();
+        assertTrue(settings.getRepeatRule());
+        settings.toggleRepeatRule();
+        assertFalse(settings.getRepeatRule());
+    }
+    
+    @Test
+    public void settingACustomRandomGivesDesiredValues() {
+        Random rand = new Random(Long.MAX_VALUE/2); //nextInt(5) gives 3, 0, 4, 4,...
+        settings.setRandom(rand);
+        settings.addAnchor(new Node(10, 10, Nodetype.ANCHOR));
+        settings.addAnchor(new Node(10, 20, Nodetype.ANCHOR));
+        settings.addAnchor(new Node(30, 100, Nodetype.ANCHOR));
+        settings.addAnchor(new Node(100, 130, Nodetype.ANCHOR));
+        settings.addAnchor(new Node(400, 220, Nodetype.ANCHOR));
+        
+        assertEquals(new Node(100, 130, Nodetype.ANCHOR), settings.getRandomAnchor());
+        assertEquals(new Node(10, 10, Nodetype.ANCHOR), settings.getRandomAnchor());
+        assertEquals(new Node(400, 220, Nodetype.ANCHOR), settings.getRandomAnchor());
     }
     
     @Test
@@ -68,6 +108,41 @@ public class SettingsTest {
         settings.addAnchor(anchor);
         settings.addAnchor(anchor);
         assertEquals(1, settings.getAnchors().size());
+    }
+    
+    @Test
+    public void addAnchorOutOfBoundsTest1() {
+        Node anchor = new Node(-10, -10, Nodetype.ANCHOR);
+        settings.addAnchor(anchor);
+        assertTrue(settings.getAnchors().isEmpty());
+    }
+    
+    @Test
+    public void addAnchorOutOfBoundsTest2() {
+        Node anchor = new Node(100000, -10, Nodetype.ANCHOR);
+        settings.addAnchor(anchor);
+        assertTrue(settings.getAnchors().isEmpty());
+    }
+    
+    @Test
+    public void addAnchorOutOfBoundsTest3() {
+        Node anchor = new Node(-10, 100000, Nodetype.ANCHOR);
+        settings.addAnchor(anchor);
+        assertTrue(settings.getAnchors().isEmpty());
+    }
+    
+    @Test
+    public void addAnchorOutOfBoundsTest4() {
+        Node anchor = new Node(100000, 100000, Nodetype.ANCHOR);
+        settings.addAnchor(anchor);
+        assertTrue(settings.getAnchors().isEmpty());
+    }
+    
+    @Test
+    public void cannotAddNodeOfWrongType() {
+        Node empty = new Node(200, 200, Nodetype.EMPTY);
+        settings.addAnchor(empty);
+        assertTrue(settings.getAnchors().isEmpty());
     }
     
     @Test
