@@ -31,10 +31,11 @@ public class SettingsDAO {
     /**
      * Creates a local database if not present, establishes a connection and
      * initializes the required tables.
+     * @param dbName Name of the database file
      */
-    public SettingsDAO() {
+    public SettingsDAO(String dbName) {
         try {
-            ConnectionSource cs = new JdbcConnectionSource("jdbc:sqlite:SavedSettings.db");
+            ConnectionSource cs = new JdbcConnectionSource("jdbc:sqlite:saves/" + dbName + ".db");
             this.daoS = DaoManager.createDao(cs, Settings.class);
             this.daoN = DaoManager.createDao(cs, Node.class);
             TableUtils.createTableIfNotExists(cs, Settings.class);
@@ -52,10 +53,10 @@ public class SettingsDAO {
      */
     public void saveToDatabase(Settings settings) {
         try {
-            DeleteBuilder<Node, String> db = daoN.deleteBuilder();
+            DeleteBuilder<Node, String> db = daoN.deleteBuilder();  //removes old anchor points
             db.setWhere(db.where().eq("settings_id", settings));
             daoN.delete(db.prepare());
-
+            
             daoS.createIfNotExists(settings);
             daoS.update(settings);
             for (Node anchor : settings.getAnchors()) {
@@ -77,6 +78,9 @@ public class SettingsDAO {
     public Settings getFromDatabase(String id) {
         try {
             Settings s = daoS.queryForId(id);
+            if (s == null) {
+                return new Settings(0.5);
+            }
             s.setAnchors(new ArrayList<>());
             List<Node> anchors = daoN.queryBuilder().where()
                     .eq("settings_id", s).query();
@@ -99,6 +103,9 @@ public class SettingsDAO {
     public void removeFromDatabase(String id) {
         try {
             Settings s = daoS.queryForId(id);
+//            if (s == null) {
+//                return;
+//            }
             DeleteBuilder<Node, String> db = daoN.deleteBuilder();
             db.setWhere(db.where().eq("settings_id", s));
             daoN.delete(db.prepare());

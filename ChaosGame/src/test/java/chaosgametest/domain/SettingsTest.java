@@ -197,4 +197,27 @@ public class SettingsTest {
         
         assertFalse(equal);
     }
+    
+    @Test
+    public void getRandomAnchorWithRepeatRuleTest1() {     //random node should alternate
+        settings.addAnchor(new Node(0, 0, Nodetype.ANCHOR));
+        settings.addAnchor(new Node(100, 100, Nodetype.ANCHOR));
+        settings.toggleRepeatRule();
+        int current = 0;
+        for (int i = 0; i < 10; i++) {
+            Node next = settings.getRandomAnchor();
+            assertEquals(current, next.getX());
+            current = 100 - current;
+        }
+    }
+    
+    @Test
+    public void getRandomAnchorWithRepeatRuleTest2() {
+        settings.addAnchor(new Node(0, 0, Nodetype.ANCHOR));
+        settings.toggleRepeatRule();
+        for (int i = 0; i < 10; i++) {
+            Node next = settings.getRandomAnchor(); 
+            assertEquals(0, next.getX());
+        }
+    }
 }

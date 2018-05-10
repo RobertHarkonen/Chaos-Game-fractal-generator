@@ -6,10 +6,6 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-/**
- *
- * @author Robert
- */
 public class FractalTest {
     
     Fractal fractal;
@@ -65,6 +61,23 @@ public class FractalTest {
     }
     
     @Test
+    public void resetTest() {
+        fractal.getSettings().setRatio(1.25);
+        fractal.addAnchor(123, 246);
+        fractal.addAnchor(300, 45);
+        fractal.iterate();
+        fractal.reset();
+        
+        assertEquals(0, fractal.getCurrentX(), 0.0000002);
+        assertEquals(0, fractal.getSettings().getAnchors().size());
+    }
+    
+    @Test
+    public void loadSettingsGetsRightSettings() {
+        
+    }
+    
+    @Test
     public void addAnchorCorrectlyAddsAnchor() {
         fractal.addAnchor(100, 100);
         assertEquals(1, fractal.getSettings().getAnchors().size());
@@ -88,6 +101,26 @@ public class FractalTest {
     public void addAnchorOutOfBoundsTest() {
         fractal.addAnchor(-10, 200);
         assertTrue(fractal.getSettings().getAnchors().isEmpty());
+    }
+    
+    @Test
+    public void getAndSetGrainSizeTest() {
+        fractal.setGrainSize(0.65);
+        assertEquals(0.65, fractal.getGrainSize(), 0.0000002);
+    }
+    
+    @Test
+    public void getAnchorCoordsTest() {
+        fractal.addAnchor(4, 8);
+        fractal.addAnchor(15, 16);
+        fractal.addAnchor(23, 42);
+        int[][] coords = fractal.getAnchorCoords();
+        int[][] testcoords = new int[][]{{4,8},{15,16},{23,42}};
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 2; j++) {
+                assertEquals(testcoords[i][j], coords[i][j]);
+            }
+        }
     }
     
     @Test

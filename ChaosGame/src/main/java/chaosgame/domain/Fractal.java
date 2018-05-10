@@ -6,7 +6,6 @@
 package chaosgame.domain;
 
 import chaosgame.dao.SettingsDAO;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,7 +34,7 @@ public class Fractal {
             height = 800;
         }
         this.settings = new Settings(0.5);
-        this.sd = new SettingsDAO();
+        this.sd = new SettingsDAO("SavedSettings");
         settings.setHeight(height);
         settings.setWidth(width);
 
@@ -52,7 +51,7 @@ public class Fractal {
      */
     public Fractal(Settings set) {
         this.settings = set;
-        this.sd = new SettingsDAO();
+        this.sd = new SettingsDAO("SavedSettings");
 
         this.currentX = settings.getFirstAnchor().getX();
         this.currentY = settings.getFirstAnchor().getY();        //0 if no anchors added

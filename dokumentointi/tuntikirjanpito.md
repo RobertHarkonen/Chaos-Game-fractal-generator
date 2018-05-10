@@ -12,4 +12,8 @@ Päivä | Tunnit | Tehty
 29.4 | 2 | lisää tietokantahommia
 1.5 | 2,5 | Tallennus, lataus ja poistamistoiminnallisuus valmis
 2.5 | 3 | Käyttöliittymäkoodin refaktorointi, Javadoc
-Yhteensä | 28 | -
+3.5 | 2 | Turhien ominaisuuksien poisto, logiikan refaktorointi
+6.5 | 2 | Lisää refaktorointia, testauksen laajennus
+7.5 | 1 | Testauksen laajennusta
+10.5 | 1.5 | Testauksen laajennusta, muuta viimeistelyä
+Yhteensä | 34,5 | -
