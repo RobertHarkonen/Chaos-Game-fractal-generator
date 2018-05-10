@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package chaosgame.dao;
 
 import chaosgame.domain.Node;
@@ -46,7 +42,7 @@ public class SettingsDAO {
     }
     
     /**
-     * Saves the given Settings, and all associated anchor points,
+     * Saves the given Settings and all associated anchor points
      * to the database.
      * 
      * @param settings The Settings to be saved
@@ -72,7 +68,7 @@ public class SettingsDAO {
      * Queries for Settings from the database with a given key.
      * 
      * @param id The string by which the Settings are identified (primary key)
-     * @return The queried settings, or default Settings if an error occurs.
+     * @return The queried settings, or default Settings if an error occurs
      * @see chaosgame.domain.Settings#Settings(double)  
      */
     public Settings getFromDatabase(String id) {
@@ -103,9 +99,9 @@ public class SettingsDAO {
     public void removeFromDatabase(String id) {
         try {
             Settings s = daoS.queryForId(id);
-//            if (s == null) {
-//                return;
-//            }
+            if (s == null) {
+                return;
+            }
             DeleteBuilder<Node, String> db = daoN.deleteBuilder();
             db.setWhere(db.where().eq("settings_id", s));
             daoN.delete(db.prepare());

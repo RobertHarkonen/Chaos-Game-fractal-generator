@@ -32,7 +32,7 @@ public class Settings {
     private Random rand;
     
     /**
-     * Empty constructor, needed for ORMlite functionality
+     * Empty constructor, needed for ORMlite functionality.
      */
     public Settings() {
         
@@ -54,7 +54,16 @@ public class Settings {
         this.rand = new Random();
     }
     
-    public void addAnchor(int x, int y) {         //can create duplicate anchors, not used
+    /**
+     * Adds a new Node with given coordinates and Nodetype ANCHOR.
+     * Same as calling addAnchor(new Anchor(x, y, Nodetype.ANCHOR)).
+     * This method can create duplicates and is redundant in the application logic,
+     * but is still used for testing.
+     * @param x X-coordinate for the anchor
+     * @param y Y-coordinate for the anchor
+     * @see chaosgame.domain.Settings#addAnchor(chaosgame.domain.Node) 
+     */
+    public void addAnchor(int x, int y) {
         anchors.add(new Node(x, y, Nodetype.ANCHOR));
     }
     
@@ -154,8 +163,8 @@ public class Settings {
     
     /**
      * Gets the first anchor point.
-     * @return The first Node in the list of anchor points, or an empty node
-     * a coordinates (0, 0) if the list is empty.
+     * @return The first Node in the list of anchor points, or an empty Node
+     * with coordinates (0, 0) if the list is empty.
      */
     public Node getFirstAnchor() {
         if (anchors.isEmpty()) {

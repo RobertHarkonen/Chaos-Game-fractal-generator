@@ -47,7 +47,7 @@ public class Fractal {
      * Fractal's local grid. The current iteration coordinates are also updated
      * to those of one of the supplied anchor points.
      *
-     * @param set
+     * @param set The Settings object to be used.
      */
     public Fractal(Settings set) {
         this.settings = set;
@@ -64,9 +64,11 @@ public class Fractal {
      * @see chaosgame.domain.Fractal#Fractal(int, int)
      */
     public void reset() {
+        int hg = getHeight();
+        int wd = getWidth();
         settings = new Settings(0.5);
-        settings.setHeight(getHeight());
-        settings.setWidth(getWidth());
+        settings.setHeight(hg);
+        settings.setWidth(wd);
 
         currentX = 0;
         currentY = 0;
@@ -123,9 +125,6 @@ public class Fractal {
         return settings.getHeight();
     }
 
-//    public Node getNode(int x, int y) {
-//        return grid[x][y];
-//    }
     public Settings getSettings() {
         return settings;
     }
@@ -180,10 +179,9 @@ public class Fractal {
     /**
      * Moves current iteration coordinates toward the next randomly chosen
      * anchor by the current ratio. If the list of anchor points is empty, this
-     * method doesn't do anything. If the coordinates moved, the Nodetype at
-     * that location is set to FILLED, if that Node was previously EMPTY.
+     * method doesn't do anything.
      *
-     * Most of the fractal drawing logic is based around this method.
+     * This method is the core of the Chaos Game fractal.
      */
     public void iterate() {
         Node nextAnchor = settings.getRandomAnchor();

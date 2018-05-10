@@ -43,7 +43,7 @@ public class ChaosGameUI extends Application {
         baseLayout.setCenter(canvas);
         baseLayout.setRight(savePanel);
         
-        //************* GETTING REFERENCES FOR UI ELEMENTS ************
+        //*************** GETTING REFERENCES FOR UI ELEMENTS ****************
         
         Button startButton = (Button) controlPanel.getChildren().get(0);
         Button clearDrawn = (Button) controlPanel.getChildren().get(1);
