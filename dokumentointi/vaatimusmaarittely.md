@@ -13,6 +13,7 @@ Sovelluksella voi piirtää fraktaaleja [Chaos Game](https://en.wikipedia.org/wi
 - Kuinka paljon tämänhetkisestä pisteestä valittuun pisteeseen liikutaan kutsumme fraktaalin *suhteeksi* (ratio). Tämä on jokin luku välillä 0 - 1.5. Suhde on oletusarvoisesti 0.5, mutta voidaan muuttaa asetuspalkista.
 - Voidaan myös asettaa niin sanottu *toistumissääntö* (repeat rule), jonka mukaan samaa ankkuripistettä ei voida valita kaksi kertaa peräkkäin. Tällä on huomattava vaikutus fraktaalin ulkonäköön.
 - Fraktaalin ulkonäköön voidaan vielä vaikuttaa muuttamalla piirroksen hienoutta (grain size) ja väriä.
+- Piirtonopeus voidaan säätää asetuspalkista asettamalla haluttu määrä iteraatioita jokaisessa AnimationTimer- syklissä (iterations per cycle).
 
 ### Fraktaalin tallennus
 - Fraktaalin generoivat asetukset voidaan tallentaa tietokantaan oikeasta laidasta löytyvästä valikosta.
