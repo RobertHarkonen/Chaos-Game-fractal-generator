@@ -31,7 +31,7 @@ public class SettingsDAO {
      */
     public SettingsDAO(String dbName) {
         try {
-            ConnectionSource cs = new JdbcConnectionSource("jdbc:sqlite:saves/" + dbName + ".db");
+            ConnectionSource cs = new JdbcConnectionSource("jdbc:sqlite:" + dbName + ".db");
             this.daoS = DaoManager.createDao(cs, Settings.class);
             this.daoN = DaoManager.createDao(cs, Node.class);
             TableUtils.createTableIfNotExists(cs, Settings.class);
