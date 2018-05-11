@@ -11,3 +11,12 @@ Tietokantatoiminnallisuus testataan erillisellä "TestDatabase"- tietokannalla. 
 
 ### Testauskattavuus
 Testaamatta jäi yllä mainitut tilanteet.
+Rivi- ja haarautumakattavuus näkyy allaolevasta kuvasta:
+![testit](https://github.com/haxrober/otm-harjoitustyo/blob/master/dokumentointi/testit.png?raw=true)
+Testatut osat näkyy tarkemmin generoimalla jacoco raportti (katso ohjeet).
+
+### Käyttöliittymä
+Käyttöliittymän testaus suoritettiin manuaalisesti. Kävin läpi kaikki käyttöohjeessa mainitut ominaisuudet, muodostin näistä mahdollisen monta tilannetta ja yritin kaataa ohjelman. Ei onnistunut.
+
+### Ongelmia
+Klikkaamalla tallennuspainiketta monta kertaa erittäin nopeasti voi aiheutua tallennusongelmia, esim kaikki ankkuripisteet eivät esiintyneet kun yritin ladata asetukset. Tämän korjaamiseen ei ollut riittävästi aikaa, mutta se ei olekaan tilanne, johon törmätään sovelluksen tavallisessa käytössä.
