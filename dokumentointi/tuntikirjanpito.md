@@ -16,4 +16,5 @@ Päivä | Tunnit | Tehty
 6.5 | 2 | Lisää refaktorointia, testauksen laajennus
 7.5 | 1 | Testauksen laajennusta
 10.5 | 1.5 | Testauksen laajennusta, muuta viimeistelyä
-Yhteensä | 34,5 | -
+11.5 | 2,5 | Dokumenttien päivitys, viimeistely
+Yhteensä | 37 | -
