@@ -14,7 +14,10 @@ Sovelluksella voi piirtää [Chaos Game](https://en.wikipedia.org/wiki/Chaos_gam
 ## Versiot
 
 [Release 1](https://github.com/haxrober/otm-harjoitustyo/releases/tag/viikko5)
+
 [Release 2](https://github.com/haxrober/otm-harjoitustyo/releases/tag/viikko6)
+
+[Lopullinen palautus](https://github.com/haxrober/otm-harjoitustyo/releases/tag/1.0)
 
 ## Komentoriviohjeet
 
