@@ -9,6 +9,8 @@ Sovelluksella voi piirtää [Chaos Game](https://en.wikipedia.org/wiki/Chaos_gam
 
 [Käyttöohje](https://github.com/haxrober/otm-harjoitustyo/blob/master/dokumentointi/kayttoohje.md)
 
+[Testausdokumentti](https://github.com/haxrober/otm-harjoitustyo/blob/master/dokumentointi/testausdokumentti.md)
+
 ## Versiot
 
 [Release 1](https://github.com/haxrober/otm-harjoitustyo/releases/tag/viikko5)
