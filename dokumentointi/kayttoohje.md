@@ -1,4 +1,6 @@
 # Käyttöohje
+Lataa ChaosGame.jar [release-sivulta](https://github.com/haxrober/otm-harjoitustyo/releases/tag/1.0)
+
 ![chaosUI](https://github.com/haxrober/otm-harjoitustyo/blob/master/dokumentointi/chaosUI1.png?raw=true)
 1. Aloita/lopeta piirtäminen
 2. Poista piirretyt pisteet, mutta ei ankkuripisteet (punaiset)
