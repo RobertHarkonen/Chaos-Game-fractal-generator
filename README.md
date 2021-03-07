@@ -5,6 +5,8 @@ This JavaFX application lets you draw 2d fractals using the [Chaos Game](https:/
 - In each iteration, choose one of the anchor points uniformly at random and move half the distance towards it. Draw a small dot at the new location.
 - Repeat many times until a fractal shape appears.
 
+![Sierpinski](https://github.com/RobertHarkonen/Chaos-Game-fractal-generator/blob/old-assignments-cleanup/Documentation/Sierpinski.png?raw=true)
+
 With changes to the rules, e.g. number and location of anchors, proportion to move instead of a half, or not allowing the same anchor to be repeated twice, many types of fractals can be generated.
 
 This started as a hobby project back in 2017 due to my fascination with fractals, after seeing the [Numberphile video](https://youtu.be/kbKtFN71Lfs) on the topic. The rudimentary version was then polished up with extra features as part of a course project at uni. This explains some of the things very uncharacteristic for a hobby project, like thorough unit testing, test coverage reports and an unnecessary database feature for saving drawing settings (added to satisfy a checklist for course grading more than anything).
