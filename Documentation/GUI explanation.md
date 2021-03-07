@@ -1,25 +1,22 @@
-# Käyttöohje
-Lataa ChaosGame.jar [release-sivulta](https://github.com/haxrober/otm-harjoitustyo/releases/tag/1.0)
+# GUI explanation
 
-![chaosUI](https://github.com/haxrober/otm-harjoitustyo/blob/master/dokumentointi/chaosUI1.png?raw=true)
-1. Aloita/lopeta piirtäminen
-2. Poista piirretyt pisteet, mutta ei ankkuripisteet (punaiset)
-3. Tyhjennä piirtotaso, palauta oletusasetukset
-4. Piirtonopeuden säädin. Jokin kokonaisluku välillä 1 ja 50000. Muutetaan kirjoittamalla numero ja painamalla ENTER
-5. Piirtohienous: Pienemmällä koolla näkyy enemmän yksityiskohtia, mutta kuvan piirtämiseen käy enemmän aikaa
-6. Fraktaalin suhde. Kertoo, minkä verran seuraavaa ankkuripistettä kohti liikutaan. Vaikuttaa fraktaalin muotoon
-7. Toistumissääntö: Samaa ankkuripistettä ei voida valita kaksi kertaa peräkkäin. Vaikuttaa fraktaalin muotoon
-8. Piirtoväri
-9. Piirtoalusta. Ankkuripisteitä voi lisätä tasolle klikkaamalla
-10. Tallennetut fraktaaliasetukset
-11. Lataa valitut asetukset
-12. Poista valitut asetukset
-13. Tallennusnimen syöttörivi
-14. Tallenna asetukset annetulla nimellä
+![chaosUI](https://github.com/RobertHarkonen/Chaos-Game-fractal-generator/blob/old-assignments-cleanup/Documentation/chaosUI1.png?raw=true)
+1. Start/stop drawing.
+2. Clear drawn fractal, but leave anchor points.
+3. Clear everything.
+4. Adjust drawing speed. An integer between 1 and 50000. Type the number and press ENTER.
+5. Drawing granularity. The size of the dot drawn in each iteration step. Smaller values yield finer, more detailed fractals but take longer to draw.
+6. Movement ratio. Which proportion of the distance toward the chosen anchor will be moved? Affects the shape of the fractal.
+7. Repeat rule. If checked, the same anchor point cannot be chosen twice in a row. Affects the shape of the fractal.
+8. Drawing color.
+9. Drawing canvas. Click to add anchor points
+10. Saved drawing settings.
+11. Load chosen settings.
+12. Delete chosen settings.
+13. Name for saved settings.
+14. Save settings with the chosen name.
 
-## Muutama vinkki
-- Sijoita kolme ankkuripistettä tasasivuiseen kolmioon, säädä suhde (6) luvuksi 0.5 ja piirrä. Näet tunnetun fraktaalin, Sierpinskin Kolmion.
-- Sijoita neljä pistettä suorakulmioon, suhde 0.5 ja piirrä hetken. Poista sitten piirretyt pisteet (2), aseta toistumissääntö (7) ja piirrä uudestaan. Mitä huomaat?
-- Sijoittamalla ankkuripisteet kauempana toisistaan saadaan enemmän yksityiskohtia.
-- Asettamalla suhde ykkösen yläpuolelle muodostuu fraktaali myös ankkuripisteiden muodostaman monikulmion ulkopuolelle. Suhdetta voi myös muuttaa piirtäessä.
-- Kokeile kaikenlaisia asetuksia ja ankkuripisteyhdistelmiä! Itsekin löydän melkein joka kerta jotain uutta.
+## Some tips
+- Place three anchor points in a triangle by clicking on the black canvas, then press start. You will see a famous fractal, the Sierpinski Triangle.
+- Play around with different numbers of anchor points, movement ratios and the repeat rule to create many different shapes.
+- By placing anchor points further from eachother, you can see more detail.
