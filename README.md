@@ -14,7 +14,7 @@ This started as a hobby project back in 2017 due to my fascination with fractals
 ## Usage
 Install Java on your system, if you have not done so already: https://www.oracle.com/java/technologies/javase-downloads.html
 
-Download the Chaos Game jar [here](https://github.com/haxrober/otm-harjoitustyo/releases/tag/1.0) and double click to run.
+Download the Chaos Game jar [here](https://github.com/RobertHarkonen/Chaos-Game-fractal-generator/releases) and double click to run.
 
 In Java version 11 and newer versions, JavaFX is no longer included by default. To run the Jar file, you may need to provide the JVM with these missing libraries:
 - Download the JavaFX SDK for your platform: https://gluonhq.com/products/javafx/
