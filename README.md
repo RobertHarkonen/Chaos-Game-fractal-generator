@@ -5,7 +5,7 @@ This JavaFX application lets you draw 2d fractals using the [Chaos Game](https:/
 - In each iteration, choose one of the anchor points uniformly at random and move half the distance towards it. Draw a small dot at the new location.
 - Repeat many times until a fractal shape appears.
 
-![Sierpinski](https://github.com/RobertHarkonen/Chaos-Game-fractal-generator/blob/old-assignments-cleanup/Documentation/Sierpinski.png?raw=true)
+![Sierpinski](https://github.com/RobertHarkonen/Chaos-Game-fractal-generator/blob/master/Documentation/Sierpinski.png?raw=true)
 
 With changes to the rules, e.g. number and location of anchors, proportion to move instead of a half, or not allowing the same anchor to be repeated twice, many types of fractals can be generated.
 
@@ -24,10 +24,12 @@ In Java version 11 and newer versions, JavaFX is no longer included by default. 
 java -jar --module-path "path/to/javafx-sdk/lib/" --add-modules javafx.controls ChaosGame.jar
 ```
 
-[Explanation of the GUI elements](https://github.com/RobertHarkonen/Chaos-Game-fractal-generator/blob/master/Documentation/GUI explanation.md)
+[Explanation of the GUI elements](https://github.com/RobertHarkonen/Chaos-Game-fractal-generator/blob/master/Documentation/GUI%20explanation.md)
 
-## Basic maven commands
+## Development
+I am no longer working on this project; only updated it recently to build properly, since some plugins were outdated. Anyone is free to work on this. Maven is the main build and dependency manager for this project.
 
+Some basic Maven commands for the project:
 - Run tests: `mvn test`
 - Test coverage report: `mvn test jacoco:report`
 - Generate a runnable .jar: `mvn package`
