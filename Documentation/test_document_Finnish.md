@@ -12,7 +12,7 @@ Tietokantatoiminnallisuus testataan erillisellä "TestDatabase"- tietokannalla. 
 ### Testauskattavuus
 Testaamatta jäi yllä mainitut tilanteet.
 Rivi- ja haarautumakattavuus näkyy allaolevasta kuvasta:
-![testit](https://github.com/RobertHarkonen/Chaos-Game-fractal-generator/blob/old-assignments-cleanup/Documentation/testit.png?raw=true)
+![testit](https://github.com/RobertHarkonen/Chaos-Game-fractal-generator/blob/master/Documentation/testit.png?raw=true)
 Testatut osat näkyy tarkemmin generoimalla jacoco raportti (katso ohjeet).
 
 ### Käyttöliittymä
