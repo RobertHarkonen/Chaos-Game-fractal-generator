@@ -1,6 +1,6 @@
 # GUI explanation
 
-![chaosUI](https://github.com/RobertHarkonen/Chaos-Game-fractal-generator/blob/master/Documentation/chaosUI1.png?raw=true)
+![chaosUI](https://github.com/ShapesAndNumbers/Chaos-Game-fractal-generator/blob/master/Documentation/chaosUI1.png?raw=true)
 1. Start/stop drawing.
 2. Clear drawn fractal, but leave anchor points.
 3. Clear everything.
